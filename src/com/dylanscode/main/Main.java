@@ -1,6 +1,5 @@
 package com.dylanscode.main;
 
-import com.dylanscode.engine.BasicGame;
 import com.dylanscode.engine.GameEngine;
 import com.dylanscode.engine.IGameLogic;
 

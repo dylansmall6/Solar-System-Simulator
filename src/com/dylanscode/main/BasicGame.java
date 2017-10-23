@@ -1,9 +1,13 @@
-package com.dylanscode.engine;
+package com.dylanscode.main;
 
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.opengl.GL11.glViewport;
+
+import com.dylanscode.engine.IGameLogic;
+import com.dylanscode.engine.Renderer;
+import com.dylanscode.engine.Window;
 
 public class BasicGame implements IGameLogic {
 
