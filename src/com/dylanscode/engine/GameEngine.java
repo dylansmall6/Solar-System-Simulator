@@ -1,5 +1,6 @@
 package com.dylanscode.engine;
 
+
 public class GameEngine implements Runnable {
 
     public static final int TARGET_FPS = 75;
@@ -37,6 +38,8 @@ public class GameEngine implements Runnable {
             gameLoop();
         } catch (Exception excp) {
             excp.printStackTrace();
+        } finally {
+            cleanup();
         }
     }
 
@@ -65,12 +68,16 @@ public class GameEngine implements Runnable {
 
             render();
 
-            if (!window.isvSync()) {
+            if ( !window.isvSync() ) {
                 sync();
             }
         }
     }
 
+    protected void cleanup() {
+        gameLogic.clean();                
+    }
+    
     private void sync() {
         float loopSlot = 1f / TARGET_FPS;
         double endTime = timer.getLastLoopTime() + loopSlot;

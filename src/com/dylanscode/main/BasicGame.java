@@ -55,6 +55,12 @@ public class BasicGame implements IGameLogic {
         }
 
         window.setClearColor(color, color, color, 0.0f);
-        renderer.clear();
+        renderer.render(window);
     }
+
+	@Override
+	public void clean()
+	{
+		renderer.cleanup();
+	}
 }
