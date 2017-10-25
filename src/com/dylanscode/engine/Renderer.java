@@ -9,7 +9,6 @@ import org.lwjgl.system.MemoryUtil;
 import com.dylanscode.engine.Utils;
 import com.dylanscode.engine.Window;
 import com.dylanscode.engine.ShaderLoader;
-
 public class Renderer {
 
     private int VBO_ID;
