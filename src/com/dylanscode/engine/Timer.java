@@ -1,6 +1,6 @@
 package com.dylanscode.engine;
 
-public class Timer {
+class Timer {
 
     private double lastLoopTime;
     

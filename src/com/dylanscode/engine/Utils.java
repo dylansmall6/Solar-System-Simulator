@@ -3,7 +3,7 @@ package com.dylanscode.engine;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class Utils {
+class Utils {
 
     public static String loadResource(String fileName) throws Exception {
         String result;

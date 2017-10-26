@@ -2,7 +2,7 @@ package com.dylanscode.engine;
 
 import org.lwjgl.opengl.GL20;
 
-public class ShaderLoader
+class ShaderLoader
 {
 	private final int p_ID;
 
@@ -10,8 +10,7 @@ public class ShaderLoader
 
 	private int fragment_shader_ID;
 
-	public ShaderLoader() throws Exception
-	{
+	public ShaderLoader() {
 		p_ID = GL20.glCreateProgram();
 		if (p_ID == 0)
 		{
@@ -19,7 +18,7 @@ public class ShaderLoader
 		}
 	}
 
-	public int create(String code, int type)
+	private int create(String code, int type)
 	{
 		int ID = GL20.glCreateShader(type);
 		if (ID == 0)

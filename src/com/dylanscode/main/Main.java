@@ -3,7 +3,7 @@ package com.dylanscode.main;
 import com.dylanscode.engine.GameEngine;
 import com.dylanscode.engine.IGameLogic;
 
-public class Main {
+class Main {
 
 	public static void main(String[] args) {
 		try {
@@ -12,8 +12,6 @@ public class Main {
 			engine.start();
 		}catch(Exception e) {
 			e.printStackTrace();
-		}finally {
-
 		}
 	}
 

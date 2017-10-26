@@ -3,9 +3,9 @@ package com.dylanscode.engine;
 
 public class GameEngine implements Runnable {
 
-    public static final int TARGET_FPS = 75;
+    private static final int TARGET_FPS = 75;
 
-    public static final int TARGET_UPS = 30;
+    private static final int TARGET_UPS = 30;
 
     private final Window window;
 
@@ -15,7 +15,7 @@ public class GameEngine implements Runnable {
 
     private final IGameLogic gameLogic;
 
-    public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) throws Exception {
+    public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) {
         gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
         window = new Window(windowTitle, width, height, vSync);
         this.gameLogic = gameLogic;
@@ -43,13 +43,13 @@ public class GameEngine implements Runnable {
         }
     }
 
-    protected void init() throws Exception {
+    private void init() throws Exception {
         window.init();
         timer.init();
         gameLogic.init();
     }
 
-    protected void gameLoop() {
+    private void gameLoop() {
         float elapsedTime;
         float accumulator = 0f;
         float interval = 1f / TARGET_UPS;
@@ -74,7 +74,7 @@ public class GameEngine implements Runnable {
         }
     }
 
-    protected void cleanup() {
+    private void cleanup() {
         gameLogic.clean();                
     }
     
@@ -84,20 +84,20 @@ public class GameEngine implements Runnable {
         while (timer.getTime() < endTime) {
             try {
                 Thread.sleep(1);
-            } catch (InterruptedException ie) {
+            } catch (InterruptedException ignored) {
             }
         }
     }
 
-    protected void input() {
+    private void input() {
         gameLogic.input(window);
     }
 
-    protected void update(float interval) {
+    private void update(float interval) {
         gameLogic.update(interval);
     }
 
-    protected void render() {
+    private void render() {
         gameLogic.render(window);
         window.update();
     }
