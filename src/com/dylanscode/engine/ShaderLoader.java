@@ -1,7 +1,12 @@
 package com.dylanscode.engine;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.system.MemoryStack;
 
+import java.nio.FloatBuffer;
+import java.util.HashMap;
+import java.util.Map;
 class ShaderLoader
 {
 	private final int p_ID;
@@ -10,7 +15,9 @@ class ShaderLoader
 
 	private int fragment_shader_ID;
 
+	private final Map<String,Integer> uniform_map;
 	public ShaderLoader() {
+	    uniform_map = new HashMap<>();
 		p_ID = GL20.glCreateProgram();
 		if (p_ID == 0)
 		{
@@ -81,4 +88,18 @@ class ShaderLoader
 		}
 	}
 
+    public void createUniform(String uniformName) {
+        int uniformLocation = GL20.glGetUniformLocation(p_ID, uniformName);
+        if (uniformLocation < 0) System.err.println("Could not initialize uniform name");
+        uniform_map.put(uniformName, uniformLocation);
+    }
+
+    public void setUniform(String uniformName, Matrix4f value) {
+        // Dump the matrix into a float buffer
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            FloatBuffer floats = stack.mallocFloat(16);
+            value.get(floats);
+            GL20.glUniformMatrix4fv(uniform_map.get(uniformName), false, floats);
+        }
+    }
 }

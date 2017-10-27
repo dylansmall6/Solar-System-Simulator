@@ -1,14 +1,13 @@
 package com.dylanscode.main;
 
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-import static org.lwjgl.opengl.GL11.glViewport;
-
 import com.dylanscode.engine.IGameLogic;
+import com.dylanscode.engine.Mesh;
 import com.dylanscode.engine.Renderer;
 import com.dylanscode.engine.Window;
-import com.dylanscode.engine.Mesh;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 
 public class BasicGame implements IGameLogic {
 
@@ -25,13 +24,13 @@ public class BasicGame implements IGameLogic {
     }
     
     @Override
-    public void init() throws Exception {
-        renderer.init();
+    public void init(Window window) throws Exception {
+        renderer.init(window);
         float[] positions = new float[]{
-                -0.5f,  0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.5f,  0.5f, 0.0f,
+                -0.5f,  0.5f, -1.05f,
+                -0.5f, -0.5f, -1.05f,
+                0.5f, -0.5f, -1.05f,
+                0.5f,  0.5f, -1.05f,
         };
         float[] colours = new float[]{
                 0.5f, 0.0f, 0.0f,
