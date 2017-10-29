@@ -1,11 +1,10 @@
 package com.dylanscode.engine;
 
+import com.dylanscode.engine.engine.game.GameObject;
 import org.joml.Matrix4f;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
+
 
 public class Renderer {
 
@@ -17,7 +16,12 @@ public class Renderer {
 
     private static final float Z_FAR = 1000.f;
 
-    private Matrix4f projectionMatrix;
+    private Transformation transformation;
+
+    public Renderer(){
+        transformation = new Transformation();
+    }
+
     public void init(Window window) throws Exception {
     	shaderLoader = new ShaderLoader();
     	shaderLoader.createVertexShader(Utils.loadResource("/vertexshader.vs"));
@@ -25,15 +29,18 @@ public class Renderer {
     	shaderLoader.link();
 
     	float aspect_ratio = (float) window.getWidth() / window.getHeight();
-    	projectionMatrix = new Matrix4f().perspective(FOV,aspect_ratio,Z_NEAR,Z_FAR);
     	shaderLoader.createUniform("projectionMatrix");
+    	shaderLoader.createUniform("worldMatrix");
+    	shaderLoader.createUniform("texture_sampler");
+
+    	window.setClearColor(0.0f,0.0f,0.0f,0.0f);
     }
 
     private void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window,Mesh mesh) {
+    public void render(Window window, GameObject[] gameObjects) {
         clear();
 
         if (window.isResized()) {
@@ -42,16 +49,17 @@ public class Renderer {
         }
 
         shaderLoader.setBinded(true);
+
+        Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV,window.getWidth(),window.getHeight(),Z_NEAR,Z_FAR);
         shaderLoader.setUniform("projectionMatrix",projectionMatrix);
 
-        glBindVertexArray(mesh.getVAO_ID());
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawElements(GL_TRIANGLES, mesh.getVERTEX_COUNT(), GL_UNSIGNED_INT, 0);
+        shaderLoader.setUniform("texture_sampler",0);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
+        for(GameObject gameObject : gameObjects){
+            Matrix4f worldMatrix = transformation.getWorldMatrix(gameObject.getPosition(),gameObject.getRotation(),gameObject.getScale());
+            shaderLoader.setUniform("worldMatrix",worldMatrix);
+            gameObject.getMesh().render();
+        }
 
         shaderLoader.setBinded(false);
     }

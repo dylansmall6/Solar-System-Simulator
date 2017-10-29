@@ -102,4 +102,7 @@ class ShaderLoader
             GL20.glUniformMatrix4fv(uniform_map.get(uniformName), false, floats);
         }
     }
+    public void setUniform(String uniformName,int value){
+	    GL20.glUniform1i(uniform_map.get(uniformName),value);
+    }
 }
