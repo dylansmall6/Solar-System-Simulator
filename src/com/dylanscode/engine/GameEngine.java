@@ -1,6 +1,8 @@
 package com.dylanscode.engine;
 
 
+import com.dylanscode.engine.engine.game.MouseHandler;
+
 public class GameEngine implements Runnable {
 
     private static final int TARGET_FPS = 75;
@@ -15,9 +17,12 @@ public class GameEngine implements Runnable {
 
     private final IGameLogic gameLogic;
 
+    private final MouseHandler mouseHandler;
+
     public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) {
         gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
         window = new Window(windowTitle, width, height, vSync);
+        mouseHandler = new MouseHandler();
         this.gameLogic = gameLogic;
         timer = new Timer();
     }
@@ -90,11 +95,12 @@ public class GameEngine implements Runnable {
     }
 
     private void input() {
-        gameLogic.input(window);
+        mouseHandler.input(window);
+        gameLogic.input(window,mouseHandler);
     }
 
     private void update(float interval) {
-        gameLogic.update(interval);
+        gameLogic.update(interval,mouseHandler);
     }
 
     private void render() {

@@ -1,5 +1,6 @@
 package com.dylanscode.engine;
 
+import com.dylanscode.engine.engine.game.Camera;
 import com.dylanscode.engine.engine.game.GameObject;
 import org.joml.Matrix4f;
 
@@ -30,7 +31,7 @@ public class Renderer {
 
     	float aspect_ratio = (float) window.getWidth() / window.getHeight();
     	shaderLoader.createUniform("projectionMatrix");
-    	shaderLoader.createUniform("worldMatrix");
+    	shaderLoader.createUniform("objectViewMatrix");
     	shaderLoader.createUniform("texture_sampler");
 
     	window.setClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -40,7 +41,7 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, GameObject[] gameObjects) {
+    public void render(Window window, Camera camera, GameObject[] gameObjects) {
         clear();
 
         if (window.isResized()) {
@@ -53,11 +54,13 @@ public class Renderer {
         Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV,window.getWidth(),window.getHeight(),Z_NEAR,Z_FAR);
         shaderLoader.setUniform("projectionMatrix",projectionMatrix);
 
+        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+
         shaderLoader.setUniform("texture_sampler",0);
 
         for(GameObject gameObject : gameObjects){
-            Matrix4f worldMatrix = transformation.getWorldMatrix(gameObject.getPosition(),gameObject.getRotation(),gameObject.getScale());
-            shaderLoader.setUniform("worldMatrix",worldMatrix);
+            Matrix4f objectViewMatrix = transformation.getObjectViewMatrix(gameObject,viewMatrix);
+            shaderLoader.setUniform("objectViewMatrix",objectViewMatrix);
             gameObject.getMesh().render();
         }
 
