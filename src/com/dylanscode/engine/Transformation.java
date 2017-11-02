@@ -27,7 +27,8 @@ public class Transformation {
                 .rotateY((float) Math.toRadians(-object.getRotation().y))
                 .rotateZ((float) Math.toRadians(-object.getRotation().z))
                 .scale(object.getScale());
-        return viewMatrix.mul(objectViewMatrix);
+        Matrix4f currMatrix = new Matrix4f(viewMatrix);
+        return currMatrix.mul(objectViewMatrix);
     }
 
     public Matrix4f getViewMatrix(Camera camera) {

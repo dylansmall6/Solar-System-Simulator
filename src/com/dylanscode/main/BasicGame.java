@@ -12,8 +12,6 @@ import com.dylanscode.engine.engine.game.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import javax.xml.soap.Text;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 

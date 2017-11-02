@@ -51,6 +51,7 @@ public class GameEngine implements Runnable {
     private void init() throws Exception {
         window.init();
         timer.init();
+        mouseHandler.init(window);
         gameLogic.init(window);
     }
 

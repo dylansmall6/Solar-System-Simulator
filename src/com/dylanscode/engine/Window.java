@@ -1,10 +1,9 @@
 package com.dylanscode.engine;
 
+import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
-
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -95,6 +94,10 @@ public class Window {
         glEnable(GL_DEPTH_TEST);
     }
 
+    public long getWindowHandle() {
+        return windowHandle;
+    }
+
     public void setClearColor(float r, float g, float b, float alpha) {
         glClearColor(r, g, b, alpha);
     }
@@ -107,9 +110,6 @@ public class Window {
         return glfwWindowShouldClose(windowHandle);
     }
 
-    public long getWindowHandle(){
-        return windowHandle;
-    }
     public String getTitle() {
         return title;
     }
