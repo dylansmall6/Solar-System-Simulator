@@ -18,7 +18,11 @@ public class GameObject {
         this.rotation = new Vector3f(0,0,0);
         this.scale = 1;
     }
-
+    public GameObject(){
+        this.position = new Vector3f(0,0,0);
+        this.rotation = new Vector3f(0,0,0);
+        this.scale = 1;
+    }
     public float getScale() {
         return scale;
     }
@@ -46,5 +50,8 @@ public class GameObject {
 
     public Mesh getMesh() {
         return mesh;
+    }
+    public void setMesh(Mesh mesh){
+        this.mesh = mesh;
     }
 }
